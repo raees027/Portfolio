@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
 import { Hero } from '../sections/Hero';
 import { About } from '../sections/About';
@@ -27,6 +27,12 @@ export const Home: React.FC<HomeProps> = ({
   setLightboxImg,
   setLightboxOpen
 }) => {
+  useEffect(() => {
+    // Force scroll to top on initial page mount if no specific hash is set
+    if (window.location.hash === '' || window.location.hash === '#/') {
+      window.scrollTo(0, 0);
+    }
+  }, []);
   return (
     <>
       <Hero scrollToSection={scrollToSection} />

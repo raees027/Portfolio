@@ -6,7 +6,7 @@ import { ShieldCheck, Cpu, Code, BrainCircuit } from 'lucide-react';
 
 export const About: React.FC = () => {
   const journeyStages = [
-    { title: "Java Full Stack", desc: "Spring Boot backend microservices and relational Oracle database management systems.", icon: <Code size={14} className="text-blue-400" /> },
+    { title: "Fullstack MERN Development", desc: "Building scalable single page architectures with Node, Express, and MongoDB databases.", icon: <Code size={14} className="text-blue-400" /> },
     { title: "Frontend Development", desc: "Building modular component layers using React, Vite, TypeScript, and Tailwind CSS.", icon: <Cpu size={14} className="text-cyan-400" /> },
     { title: "Cybersecurity Ops", desc: "TCS Analyst roles - auditing codes, tracing SYN logs, and analyzing packet data alerts.", icon: <ShieldCheck size={14} className="text-purple-400" /> },
     { title: "Artificial Intelligence", desc: "Developing OpenAI assistant APIs and implementing Pinecone vector store RAG systems.", icon: <BrainCircuit size={14} className="text-pink-400" /> },

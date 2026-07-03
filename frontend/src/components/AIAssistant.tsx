@@ -32,62 +32,55 @@ export const AIAssistant: React.FC = () => {
       keywords: ['about', 'raees', 'whoami', 'who is', 'muhammed'],
       answer: `**Muhammed Raees Pareed** is an Assistant System Engineer at **Tata Consultancy Services (TCS)** since May 2024.
       
-He bridges the gap between **Frontend Development** (Vite, React, TypeScript, Tailwind) and **Cybersecurity Analytics** (SIEM logs auditing, threat feeds scanning).
-- **Core Focus**: Designing secure MERN stacks, implementing client-side pagination structures, guarding REST API endpoints, and orchestrating vector embeddings for RAG systems.`
+He is a **Software Engineer / MERN Stack Developer** with a strong background in **Cybersecurity Analytics** (log auditing and anomaly detection).
+- **Core Focus**: Designing responsive and secure MERN stacks, implementing client-side pagination structures, and developing fullstack web and mobile systems.`
     },
     {
       keywords: ['skills', 'technologies', 'languages', 'tech', 'stack'],
       answer: `Raees operates across multiple technical dimensions:
       
-- **Frontend Layer**: React.js, TypeScript, JavaScript, Tailwind CSS, Material UI, Redux Toolkit, Vite, HTML5/CSS3.
-- **Backend Services**: Node.js, Express.js, Java, Spring Boot, REST APIs.
-- **Databases & Cache**: MySQL, Oracle DB, MongoDB.
-- **Tools & Operations**: Git, Docker, Postman, Linux command consoles.
-- **AI & Data Ops**: OpenAI APIs, Pinecone Vector DB, LangChain schemas.`
+- **Frontend Layer**: React.js, JavaScript, TypeScript (Basic), Responsive UI Development, Material UI, HTML5/CSS3.
+- **Backend Services**: Node.js, Express.js, REST APIs.
+- **Databases**: MongoDB, SQL.
+- **Tools & Platforms**: Git, GitHub, Postman, Docker, Kubernetes.`
     },
     {
       keywords: ['projects', 'portfolio', 'showcase'],
-      answer: `Here are the key featured projects built by Raees:
+      answer: `Here are the featured projects built by Raees:
       
-1. **SOC Threat Radar Analyzer**: Interactive network logs dashboard with a terminal console to simulate active incident sweeps and port scan mitigations (React, Express, Recharts).
-2. **Cinemas Movie Dashboard**: MERN database search platform featuring JWT authenticated watchlist storage and debounced query optimization.
-3. **Flight Reservation System**: Java Spring Boot backend with JPA optimistic locking to resolve ticket double-booking conditions (React, MySQL).
-4. **Vehicle Insurance System**: Oracle-based Spring MVC workflow mapping calculator models (Java, PL/SQL).
-5. **RAG Agent AI Project**: OpenAI document chunking assistant with vector store lookup context filters (Pinecone, LangChain).`
+1. **Cinemas Movie Dashboard**: Web application with Admin and User modes, where admins manage movie records and users browse movie details (React.js, Node.js, MongoDB).
+2. **ScamShield**: Fullstack security scanner and reporter platform designed to identify and catalog suspicious UPI IDs, phone numbers, and URLs (React Native, Expo, TypeScript, Neon PostgreSQL).`
     },
     {
       keywords: ['certifications', 'certs', 'verified', 'credentials'],
-      answer: `Raees holds verified certifications across frontend development and cybersecurity:
+      answer: `Raees holds verified certifications including:
       
-- **Java Full Stack Enterprise ILP**: TCS Academy credentials.
-- **Cybersecurity Analyst Bootcamp**: TCS Academy incident management training.
-- **React Essential Training**: Verified LinkedIn Learning credentials.
-- **Generative AI Foundations & RAG Architectures**: Ongoing curriculum.`
+- **React JS Essential Training**: LinkedIn Learning.
+- **Introduction to Web Design and Development**: LinkedIn Learning.
+- **Process: Agile for Practitioners Assessment**: TCS / Agile credentials.`
     },
     {
       keywords: ['goals', 'career', 'future', 'objective'],
-      answer: `His future career objective is to become a **Senior AI Security Engineer**.
-      
-He aims to build secure systems and design defense frameworks that guard generative AI models against exploitation vectors (such as prompt injections, training data contamination, and adversarial leaks).`
+      answer: `His career objective is to build responsive, secure, and user-friendly web and mobile applications as a professional Fullstack Developer, continually integrating modern security best practices.`
     },
     {
       keywords: ['contact', 'email', 'hire', 'linkedin', 'github'],
-      answer: `You can reach out to Muhammed Raees Pareed via the following channels:
+      answer: `You can reach out to Muhammed Raees Pareed via:
       
 - **Email**: [raeeskp02@gmail.com](mailto:raeeskp02@gmail.com)
 - **LinkedIn**: [in/raees-muhammed-](https://www.linkedin.com/in/raees-muhammed-/)
 - **GitHub**: [github.com/raees027](https://github.com/raees027)
-- **Location**: Bangalore, India / Cochin, Kerala.`
+- **Location**: Bangalore, India.`
     },
     {
       keywords: ['tcs', 'experience', 'work', 'job', 'assistant'],
-      answer: `Raees has been working as an **Assistant System Engineer** at **TCS** since May 2024.
+      answer: `Raees works as an **Assistant System Engineer** at **TCS** since May 2024.
       
-**Key Contributions**:
-- Maintained reusable UI components for secure dashboard layers using React.
-- Audited repository codes to remediate exploit patterns.
-- Managed port scanning logs and automated alerting grids.
-- Completed fullstack training in Spring Boot enterprise architectures.`
+**Key Highlights**:
+- Analyzed and investigated system issues using logs and monitoring tools.
+- Performed debugging and root cause analysis to resolve technical problems.
+- Collaborated with cross-functional teams to improve system reliability.
+- Worked with large datasets to identify anomalies and improve performance.`
     }
   ];
 

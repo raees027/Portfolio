@@ -73,7 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ scrollToSection }) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-[8vw] sm:text-[6vw] font-black tracking-tighter leading-none uppercase select-none z-10 bg-gradient-to-b from-[#f4f4f7] via-[#e2e8f0] to-slate-400 bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(255,255,255,0.03)]"
+            className="font-sans text-[8vw] sm:text-[6vw] font-black tracking-tighter leading-none uppercase select-none z-10 bg-gradient-to-r from-white via-blue-500 to-cyan-400 bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(37,99,235,0.08)]"
           >
             Muhammed Raees Pareed
           </motion.h1>
@@ -106,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ scrollToSection }) => {
           {[
             { label: 'React Developer', icon: <Zap size={10} className="text-blue-400" /> },
             { label: 'Cybersecurity Analyst', icon: <Shield size={10} className="text-purple-400" /> },
-            { label: 'Java Full Stack', icon: <Cpu size={10} className="text-cyan-400" /> },
+            { label: 'MERN Developer', icon: <Cpu size={10} className="text-cyan-400" /> },
             { label: 'AI Enthusiast', icon: <Sparkles size={10} className="text-pink-400" /> }
           ].map((pill, idx) => (
             <div 
