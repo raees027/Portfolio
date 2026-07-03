@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Cpu, HardDrive, Award, Code } from 'lucide-react';
+import React from 'react';
+import { ShieldCheck, HardDrive, Award, Code } from 'lucide-react';
 
 const Metrics = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const stats = [
     {
