@@ -218,33 +218,39 @@ export const Projects: React.FC<ProjectsProps> = ({
                         </div>
                       )}
 
-                      {/* Project 2: Threat Radar simulator */}
+                      {/* Project 2: ScamShield Scanner Mockup */}
                       {project.id === 2 && (
-                        <div className="p-6 bg-black/40 flex flex-col sm:flex-row items-center justify-between gap-6 select-none relative">
-                          {/* Left Radar Widget */}
-                          <div className="relative w-32 h-32 rounded-full border border-purple-500/25 bg-[#050507] flex items-center justify-center overflow-hidden flex-shrink-0">
-                            <div className="absolute w-[75%] h-[75%] rounded-full border border-dashed border-purple-500/10"></div>
-                            <div className="absolute w-[45%] h-[45%] rounded-full border border-dashed border-purple-500/10"></div>
-                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-purple-500/20 animate-radar-sweep origin-center rounded-full pointer-events-none"></div>
-                            <div className="absolute top-[30%] left-[65%] w-2 h-2 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]"></div>
-                            <div className="absolute top-[70%] left-[25%] w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_6px_#a855f7] animate-ping"></div>
-                            <span className="text-[8px] font-mono text-purple-400 font-bold">RADAR_IDS</span>
+                        <div className="p-6 bg-black/40 flex flex-col justify-between space-y-4 select-none relative font-mono text-xs">
+                          {/* Top Scan Bar */}
+                          <div className="flex gap-2">
+                            <div className="flex-1 bg-slate-950 border border-white/5 rounded px-2.5 py-1.5 flex items-center justify-between text-[10px] text-slate-400">
+                              <span>paytm-support@ybl</span>
+                              <span className="bg-red-500/10 text-red-400 border border-red-500/20 px-1 py-0.5 rounded text-[8px] font-bold">UPI</span>
+                            </div>
+                            <div className="bg-purple-650 text-purple-400 font-bold px-3 py-1.5 rounded text-[9px] border border-purple-500/20 bg-purple-500/10 uppercase tracking-wider flex items-center">
+                              SCANNER_ACTIVE
+                            </div>
                           </div>
 
-                          {/* Right Telemetry Panel */}
-                          <div className="flex-1 w-full space-y-3 font-mono text-xs">
-                            <div className="flex justify-between items-center text-[10px] border-b border-white/5 pb-1.5">
-                              <span className="text-slate-500">THREAT_LEVEL:</span>
-                              <span className="text-purple-400 font-bold">0.02 (LOW)</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[10px] border-b border-white/5 pb-1.5">
-                              <span className="text-slate-500">PORTS_AUDITED:</span>
-                              <span className="text-slate-300 font-bold">64,532</span>
+                          {/* Scanner Results Panel */}
+                          <div className="p-3 bg-red-955/15 border border-red-900/20 rounded-xl space-y-2">
+                            <div className="flex justify-between items-center text-[10px]">
+                              <span className="text-slate-400">VERDICT:</span>
+                              <span className="text-red-400 font-bold tracking-widest uppercase">FLAGGED (SCAM)</span>
                             </div>
                             <div className="flex justify-between items-center text-[10px]">
-                              <span className="text-slate-500">SNORT_INTEGRITY:</span>
-                              <span className="text-cyan-400 font-bold">OPTIMIZED</span>
+                              <span className="text-slate-400">REPORTS RECORDED:</span>
+                              <span className="text-slate-200 font-bold">14 verified alerts</span>
                             </div>
+                            <p className="text-[9px] text-slate-500 leading-normal border-t border-red-900/10 pt-1.5">
+                              This entity has been logged under multiple phishing and social engineering campaigns. Database sweeps suggest immediate containment.
+                            </p>
+                          </div>
+
+                          {/* Live DB Telemetry mini indicators */}
+                          <div className="flex justify-between text-[8px] text-slate-500 border-t border-white/[0.03] pt-2">
+                            <span>NEON_POOL: ACTIVE</span>
+                            <span>BLOCK_LIST: 1,842</span>
                           </div>
                         </div>
                       )}
