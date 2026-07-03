@@ -6,12 +6,16 @@ interface NavbarProps {
   activeSection: string;
   scrollToSection: (id: string) => void;
   onOpenCmdPalette?: () => void;
+  sysMode?: string;
+  setSysMode?: (mode: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeSection, 
   scrollToSection,
-  onOpenCmdPalette
+  onOpenCmdPalette,
+  sysMode,
+  setSysMode
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -26,6 +30,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const cycleMode = () => {
+    if (!setSysMode || !sysMode) return;
+    if (sysMode === 'dual') setSysMode('dev');
+    else if (sysMode === 'dev') setSysMode('sec');
+    else setSysMode('dual');
+  };
 
   const navLinks = [
     { id: 'hero', label: 'Home' },
@@ -52,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={() => scrollToSection('hero')} 
           className="font-mono text-xs font-bold tracking-widest text-[#f4f4f7] cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-2"
         >
-          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
           RAEES.DEV
         </div>
 
@@ -75,6 +86,23 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Search Command Trigger & Social */}
         <div className="hidden md:flex items-center space-x-4">
+          {/* Theme/System Mode Toggle */}
+          {sysMode && setSysMode && (
+            <button 
+              onClick={cycleMode}
+              className={`px-3 py-1.5 rounded-lg border font-mono text-[9px] font-bold cursor-pointer transition-all uppercase select-none ${
+                sysMode === 'dev'
+                  ? 'bg-blue-950/20 text-cyan-400 border-blue-500/25 hover:border-blue-400'
+                  : sysMode === 'sec'
+                    ? 'bg-purple-950/20 text-purple-400 border-purple-500/25 hover:border-purple-400'
+                    : 'bg-slate-900 text-slate-400 border-white/5 hover:border-white/10'
+              }`}
+              title="Cycle Accent theme color (Dual / Developer / Security)"
+            >
+              Mode: {sysMode}
+            </button>
+          )}
+
           {/* Spotlight Palette Button (Linear-style search box) */}
           <button 
             onClick={onOpenCmdPalette}
@@ -103,6 +131,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-3 md:hidden">
+          {sysMode && setSysMode && (
+            <button 
+              onClick={cycleMode}
+              className={`px-2 py-1 rounded border font-mono text-[9px] font-bold cursor-pointer transition-all uppercase select-none ${
+                sysMode === 'dev'
+                  ? 'bg-blue-950/20 text-cyan-400 border-blue-500/25'
+                  : sysMode === 'sec'
+                    ? 'bg-purple-950/20 text-purple-400 border-purple-500/25'
+                    : 'bg-slate-900 text-slate-400 border-white/5'
+              }`}
+            >
+              {sysMode}
+            </button>
+          )}
+
           <button 
             onClick={onOpenCmdPalette}
             className="p-1.5 rounded-lg bg-slate-900 border border-white/5 text-slate-400 hover:text-white cursor-pointer"

@@ -7,28 +7,28 @@ const Terminal = () => {
     { text: 'SOC Terminal Session Initialized.', type: 'info' },
     { text: 'Type "help" or click the chips below to query portfolio records.', type: 'success' },
     { text: 'Try running "hack" to trigger active network sweep logging.', type: 'warning' },
+    { text: 'You can also execute JS math/logic: try typing "run Math.sqrt(81) * 5".', type: 'info' },
     { text: '', type: 'input' }
   ]);
   const [input, setInput] = useState('');
   const terminalEndRef = useRef(null);
 
   const commands = {
-    help: 'Available commands: whoami, skills, projects, certs, hack, clear',
+    help: 'Available commands: whoami, skills, projects, certs, hack, run [js_code], clear',
     whoami: `Muhammed Raees Pareed
 Role: Assistant System Engineer & Cybersecurity Analyst at TCS
 Location: Bangalore, India
-Focus: Core MERN stack architectures, secure code auditing, incident telemetry analysis.`,
-    skills: `Languages: Java, JavaScript, TypeScript, Python, C++
-Frontend: React.js, Vite, Tailwind CSS, Material UI, Redux Toolkit
-Backend: Node.js, Express.js, Spring Boot, REST APIs, JWT Auth
-Databases & Cache: MongoDB, Oracle DB, MySQL
-Operations: Docker, Git, Postman, Linux command consoles`,
-    projects: `1. Cinemas Movie Dashboard: Fullstack MERN discovery site featuring cursor pagination and watchlist caching.
-2. SOC Threat Radar: Live logs sweep dashboard featuring interactive CLI console logging ports.
-3. Flight Booking System: Spring Boot relational ticket manager using optimistic transactional lock versioning.`,
-    certs: `- TCS Enterprise Java Full Stack verified credentials.
-- TCS Cybersecurity Operations Bootcamp certification.
-- React JS Essential Training verified certificate.`,
+Focus: Core MERN stack architectures, web security audits, and threat telemetry analysis.`,
+    skills: `Languages: JavaScript, TypeScript (Basic), Python, Java, C++
+Frontend: React.js, HTML5, CSS3, Material UI, Responsive UI Development
+Backend: Node.js, Express.js, REST APIs
+Databases: MongoDB, SQL
+Operations: Git, GitHub, Postman, Docker, Kubernetes, Linux command CLI`,
+    projects: `1. Cinemas Movie Dashboard: Fullstack MERN movies platform featuring modular UI components, watchlist records, and pagination.
+2. ScamShield: Fullstack security scanner and reporter platform blocking fraudulent UPIs, phone numbers, and URLs (React Native/Expo & Express/PostgreSQL).`,
+    certs: `- React JS Essential Training (LinkedIn Learning) verified credentials.
+- Introduction to Web Design and Development (LinkedIn Learning) verified credentials.
+- Process: Agile for Practitioners Assessment (TCS / Agile) verified credentials.`,
     hack: `[SYSTEM_ALERT] Initiating penetration testing simulation...
 [INFO] Scanning target ports on localhost API endpoint...
 [OK] Port 22 (SSH) - ACTIVE
@@ -47,6 +47,19 @@ Operations: Docker, Git, Postman, Linux command consoles`,
 
     if (trimmedCmd === 'clear') {
       setHistory([]);
+      return;
+    }
+
+    if (trimmedCmd.startsWith('run ')) {
+      const code = cmdText.substring(4);
+      try {
+        // Safe evaluation in local context (purely client-side sandboxed return)
+        const result = Function(`"use strict"; return (${code})`)();
+        newHistory.push({ text: `=> ${result !== undefined ? result : 'undefined'}`, type: 'success' });
+      } catch (err) {
+        newHistory.push({ text: `[ERROR] ${err.message}`, type: 'error' });
+      }
+      setHistory(newHistory);
       return;
     }
 
@@ -111,83 +124,80 @@ Operations: Docker, Git, Postman, Linux command consoles`,
     handleCommand(cmd);
   };
 
-  // Scroll to bottom
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scroll to bottom
+    if (terminalEndRef.current) {
+      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [history]);
 
   return (
-    <div className="flex flex-col h-[400px] glass-card border border-white/5 rounded-2xl overflow-hidden shadow-2xl bg-slate-950/40">
-      {/* Window Header */}
+    <div className="w-full glass-card border border-white/5 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-96 relative z-10">
+      
+      {/* Terminal Title Bar */}
       <div className="flex items-center justify-between px-4 py-2.5 bg-[#0a0a0c] border-b border-white/[0.04]">
-        <div className="flex items-center space-x-2">
-          <TermIcon size={14} className="text-cyber-accent-cyan" />
-          <span className="font-mono text-[10px] font-bold text-slate-500">soc_terminal_session.sh</span>
+        <div className="flex items-center gap-2">
+          <TermIcon size={13} className="text-blue-500 animate-pulse" />
+          <span className="font-mono text-[10px] font-bold tracking-widest text-[#8a8a93] uppercase">soc_terminal_session.sh</span>
         </div>
         <div className="flex space-x-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-slate-800"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-slate-900"></div>
         </div>
       </div>
 
-      {/* Output Console */}
+      {/* Terminal Output Logs */}
       <div className="flex-1 p-4 overflow-y-auto font-mono text-xs space-y-1.5 scrollbar-none bg-[#050816]/20">
-        {history.map((line, idx) => {
-          let color = 'text-slate-350';
-          if (line.type === 'input') color = 'text-cyber-accent-cyan font-bold';
-          else if (line.type === 'success') color = 'text-cyber-accent-cyan';
-          else if (line.type === 'warning') color = 'text-amber-450';
-          else if (line.type === 'error') color = 'text-red-400';
-          else if (line.type === 'highlight') color = 'text-cyber-accent-purple';
-
-          return (
-            <div key={idx} className={`${color} whitespace-pre-wrap leading-relaxed`}>
-              {line.text}
-            </div>
-          );
-        })}
+        {history.map((log, idx) => (
+          <div 
+            key={idx} 
+            className={`leading-relaxed whitespace-pre-wrap ${
+              log.type === 'input' ? 'text-slate-200' :
+              log.type === 'success' ? 'text-emerald-400 font-bold' :
+              log.type === 'warning' ? 'text-purple-400 font-bold' :
+              log.type === 'error' ? 'text-rose-500' :
+              log.type === 'highlight' ? 'text-cyan-400 font-bold' : 'text-slate-400 font-light'
+            }`}
+          >
+            {log.text}
+          </div>
+        ))}
         <div ref={terminalEndRef} />
       </div>
 
-      {/* Quick Chips */}
-      <div className="px-4 py-2 bg-[#0a0a0c]/80 border-t border-white/[0.04] flex flex-wrap gap-2 items-center text-[10px] font-mono">
-        <span className="text-slate-500 font-bold">Quick Query:</span>
-        {['whoami', 'skills', 'projects', 'certs', 'hack'].map((cmd) => (
-          <button
+      {/* Command input prompt form */}
+      <form onSubmit={handleSubmit} className="flex items-center border-t border-white/[0.04] bg-[#050816]/40 px-4 py-2.5">
+        <span className="font-mono text-xs text-blue-500 font-bold mr-2 select-none">visitor@soc-session:~$</span>
+        <input 
+          type="text" 
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder='Type command...'
+          className="flex-grow bg-transparent border-0 outline-none text-slate-200 font-mono text-xs focus:ring-0 focus:ring-offset-0 placeholder-slate-700"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+        />
+        <button type="submit" className="text-slate-500 hover:text-white cursor-pointer select-none">
+          <Play size={12} fill="currentColor" />
+        </button>
+      </form>
+
+      {/* Suggestion Quick Chips */}
+      <div className="px-4 py-2 bg-slate-950/60 border-t border-white/[0.02] flex gap-1.5 overflow-x-auto scrollbar-none whitespace-nowrap">
+        {['whoami', 'skills', 'projects', 'certs', 'hack', 'clear'].map(cmd => (
+          <button 
             key={cmd}
             onClick={() => handleChipClick(cmd)}
-            className="px-2 py-0.5 rounded bg-slate-900 border border-white/5 hover:border-cyber-accent-cyan/30 hover:text-cyber-accent-cyan text-slate-400 font-bold transition-colors cursor-pointer"
+            className="px-2 py-0.5 rounded bg-slate-900 border border-white/5 text-[9px] font-mono text-slate-500 hover:text-white hover:border-blue-500/20 transition-all cursor-pointer font-bold uppercase"
           >
             {cmd}
           </button>
         ))}
-        <button
-          onClick={() => handleChipClick('clear')}
-          className="px-2 py-0.5 rounded bg-slate-900 text-red-400 hover:bg-red-500/10 hover:border-red-400/50 border border-white/5 font-bold transition-colors ml-auto cursor-pointer"
-        >
-          clear
-        </button>
       </div>
 
-      {/* Command Input Form */}
-      <form onSubmit={handleSubmit} className="flex bg-[#050816]/90 border-t border-white/[0.04] items-center">
-        <span className="pl-4 text-cyber-accent-cyan font-mono text-xs font-bold select-none">visitor@soc-session:~$</span>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Type command (tab auto-completes)..."
-          className="flex-1 px-2 py-3 bg-transparent border-0 outline-none text-cyber-accent-cyan font-mono text-xs focus:ring-0 focus:ring-offset-0"
-        />
-        <button
-          type="submit"
-          className="px-4 py-3 bg-[#0a0a0c] border-l border-white/[0.04] text-cyber-accent-cyan hover:bg-cyber-accent-cyan/5 transition-colors cursor-pointer"
-        >
-          <Play size={10} className="fill-current" />
-        </button>
-      </form>
     </div>
   );
 };

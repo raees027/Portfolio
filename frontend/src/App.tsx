@@ -110,6 +110,8 @@ const App: React.FC = () => {
             activeSection={activeSection} 
             scrollToSection={scrollToSection} 
             onOpenCmdPalette={() => setCmdPaletteOpen(true)} 
+            sysMode={sysMode}
+            setSysMode={setSysMode}
           />
 
           {/* Router switch viewports */}

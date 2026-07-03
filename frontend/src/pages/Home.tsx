@@ -35,7 +35,7 @@ export const Home: React.FC<HomeProps> = ({
   }, []);
   return (
     <>
-      <Hero scrollToSection={scrollToSection} />
+      <Hero scrollToSection={scrollToSection} sysMode={sysMode} />
       <About />
       <Skills />
       <Dashboard />

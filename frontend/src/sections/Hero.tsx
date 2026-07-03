@@ -16,9 +16,10 @@ const TITLES = [
 
 interface HeroProps {
   scrollToSection: (id: string) => void;
+  sysMode?: string;
 }
 
-export const Hero: React.FC<HeroProps> = ({ scrollToSection }) => {
+export const Hero: React.FC<HeroProps> = ({ scrollToSection, sysMode }) => {
   const [titleIdx, setTitleIdx] = useState(0);
 
   useEffect(() => {
@@ -28,8 +29,14 @@ export const Hero: React.FC<HeroProps> = ({ scrollToSection }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const getGlowClass = () => {
+    if (sysMode === 'dev') return 'dev-glow';
+    if (sysMode === 'sec') return 'sec-glow';
+    return 'radial-ambient';
+  };
+
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-[#050816] select-none z-10 radial-ambient">
+    <section id="hero" className={`relative min-h-screen flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-[#050816] select-none z-10 ${getGlowClass()}`}>
       
       {/* 3D Particle System Sphere Background */}
       <Canvas3D />
@@ -73,7 +80,13 @@ export const Hero: React.FC<HeroProps> = ({ scrollToSection }) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-[8vw] sm:text-[6vw] font-black tracking-tighter leading-none uppercase select-none z-10 bg-gradient-to-r from-white via-blue-500 to-cyan-400 bg-clip-text text-transparent filter drop-shadow-[0_0_30px_rgba(37,99,235,0.08)]"
+            className={`font-sans text-[8vw] sm:text-[6vw] font-black tracking-tighter leading-none uppercase select-none z-10 bg-clip-text text-transparent bg-gradient-to-r ${
+              sysMode === 'dev'
+                ? 'from-white via-blue-600 to-cyan-400 filter drop-shadow-[0_0_30px_rgba(37,99,235,0.1)]'
+                : sysMode === 'sec'
+                  ? 'from-white via-purple-500 to-red-400 filter drop-shadow-[0_0_30px_rgba(168,85,247,0.1)]'
+                  : 'from-white via-blue-500 to-cyan-400 filter drop-shadow-[0_0_30px_rgba(37,99,235,0.08)]'
+            }`}
           >
             Muhammed Raees Pareed
           </motion.h1>
