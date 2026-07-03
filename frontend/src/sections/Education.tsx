@@ -28,7 +28,7 @@ export const Education: React.FC = () => {
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1, cubicBezier: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
               {/* Timeline dot */}

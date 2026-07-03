@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Container, Grid, Typography, TextField, Button } from '@mui/material';
-import { ChevronRight, Mail } from 'lucide-react';
+import { Container, Typography, TextField, Button } from '@mui/material';
+import { ChevronRight } from 'lucide-react';
 import { PERSONAL_INFO } from '../constants';
 
 export const Contact: React.FC = () => {
@@ -19,6 +19,14 @@ export const Contact: React.FC = () => {
     setLoading(true);
     setSuccess(null);
 
+    // Simple email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactForm.email)) {
+      setSuccess('Invalid email format.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5000/api/contact', {
         method: 'POST',
@@ -33,8 +41,8 @@ export const Contact: React.FC = () => {
       } else {
         setSuccess(data.error || 'Failed to send message.');
       }
-    } catch (err) {
-      setSuccess('Message saved successfully! (Backend API offline fallback)');
+    } catch {
+      setSuccess('Message saved! (API offline session fallback)');
       setContactForm({ name: '', email: '', subject: '', message: '' });
     } finally {
       setLoading(false);
@@ -42,31 +50,31 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 border-b border-white/5 relative z-10 bg-[#030303] linear-grid">
+    <section id="contact" className="py-24 border-b border-white/5 relative z-10 bg-[#050816] linear-grid">
       <Container maxWidth="lg" className="space-y-12">
         
         {/* Section Title */}
         <div className="space-y-2">
-          <span className="font-mono text-xs text-indigo-400 font-bold uppercase tracking-widest block">
+          <span className="font-mono text-xs text-blue-500 font-bold uppercase tracking-widest block">
             GET IN TOUCH
           </span>
           <Typography variant="h3" className="font-oswald font-extrabold text-[#f4f4f7] tracking-tight uppercase text-3xl sm:text-4xl">
-            Contact
+            Contact Me
           </Typography>
-          <div className="h-[2px] w-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded mt-2"></div>
+          <div className="h-[2px] w-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded mt-2"></div>
         </div>
 
-        <Grid container spacing={6}>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Left Column Info */}
-          <Grid item xs={12} md={4} className="space-y-6">
-            <Typography className="text-sm text-[#8a8a93] font-light leading-relaxed">
+          <div className="md:col-span-4 space-y-6">
+            <Typography className="text-sm text-slate-400 font-light leading-relaxed">
               Have a project query, full-time opportunity, or system security audit in mind? Send a message directly, and I'll respond as soon as possible.
             </Typography>
             
-            <div className="space-y-4 font-mono text-xs text-[#8a8a93]">
+            <div className="space-y-4 font-mono text-xs text-slate-400">
               <div className="space-y-1">
                 <span className="text-[10px] text-slate-500 font-bold uppercase">DIRECT EMAIL</span>
-                <Typography className="text-indigo-400 font-bold">{PERSONAL_INFO.email}</Typography>
+                <Typography className="text-blue-400 font-bold">{PERSONAL_INFO.email}</Typography>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] text-slate-500 font-bold uppercase">SOCIAL LINKS</span>
@@ -84,10 +92,10 @@ export const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
-          </Grid>
+          </div>
 
           {/* Right Column Form */}
-          <Grid item xs={12} md={8}>
+          <div className="md:col-span-8">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -96,8 +104,8 @@ export const Contact: React.FC = () => {
               className="glass-card p-6 sm:p-8 rounded-2xl border border-white/5"
             >
               <form onSubmit={handleContactSubmit} className="space-y-6">
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
                     <TextField
                       fullWidth
                       required
@@ -111,14 +119,14 @@ export const Contact: React.FC = () => {
                         '& .MuiOutlinedInput-root': {
                           color: '#f4f4f7',
                           '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                          '&:hover fieldset': { borderColor: 'rgba(99, 102, 241, 0.3)' },
-                          '&.Mui-focused fieldset': { borderColor: '#6366f1' },
+                          '&:hover fieldset': { borderColor: 'rgba(37, 99, 235, 0.3)' },
+                          '&.Mui-focused fieldset': { borderColor: '#2563eb' },
                         },
-                        '& .MuiInputLabel-root': { color: '#8a8a93' }
+                        '& .MuiInputLabel-root': { color: '#94a3b8' }
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
+                  </div>
+                  <div>
                     <TextField
                       fullWidth
                       required
@@ -132,14 +140,14 @@ export const Contact: React.FC = () => {
                         '& .MuiOutlinedInput-root': {
                           color: '#f4f4f7',
                           '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                          '&:hover fieldset': { borderColor: 'rgba(99, 102, 241, 0.3)' },
-                          '&.Mui-focused fieldset': { borderColor: '#6366f1' },
+                          '&:hover fieldset': { borderColor: 'rgba(37, 99, 235, 0.3)' },
+                          '&.Mui-focused fieldset': { borderColor: '#2563eb' },
                         },
-                        '& .MuiInputLabel-root': { color: '#8a8a93' }
+                        '& .MuiInputLabel-root': { color: '#94a3b8' }
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={12}>
+                  </div>
+                  <div className="sm:col-span-2">
                     <TextField
                       fullWidth
                       label="Subject"
@@ -152,14 +160,14 @@ export const Contact: React.FC = () => {
                         '& .MuiOutlinedInput-root': {
                           color: '#f4f4f7',
                           '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                          '&:hover fieldset': { borderColor: 'rgba(99, 102, 241, 0.3)' },
-                          '&.Mui-focused fieldset': { borderColor: '#6366f1' },
+                          '&:hover fieldset': { borderColor: 'rgba(37, 99, 235, 0.3)' },
+                          '&.Mui-focused fieldset': { borderColor: '#2563eb' },
                         },
-                        '& .MuiInputLabel-root': { color: '#8a8a93' }
+                        '& .MuiInputLabel-root': { color: '#94a3b8' }
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={12}>
+                  </div>
+                  <div className="sm:col-span-2">
                     <TextField
                       fullWidth
                       required
@@ -174,14 +182,14 @@ export const Contact: React.FC = () => {
                         '& .MuiOutlinedInput-root': {
                           color: '#f4f4f7',
                           '& fieldset': { borderColor: 'rgba(255,255,255,0.05)' },
-                          '&:hover fieldset': { borderColor: 'rgba(99, 102, 241, 0.3)' },
-                          '&.Mui-focused fieldset': { borderColor: '#6366f1' },
+                          '&:hover fieldset': { borderColor: 'rgba(37, 99, 235, 0.3)' },
+                          '&.Mui-focused fieldset': { borderColor: '#2563eb' },
                         },
-                        '& .MuiInputLabel-root': { color: '#8a8a93' }
+                        '& .MuiInputLabel-root': { color: '#94a3b8' }
                       }}
                     />
-                  </Grid>
-                </Grid>
+                  </div>
+                </div>
 
                 <div className="flex items-center justify-between">
                   <Button
@@ -205,17 +213,18 @@ export const Contact: React.FC = () => {
                   </Button>
 
                   {success && (
-                    <span className="font-mono text-xs text-indigo-400 font-bold uppercase">
+                    <span className="font-mono text-xs text-blue-400 font-bold uppercase">
                       {success}
                     </span>
                   )}
                 </div>
               </form>
             </motion.div>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
 
       </Container>
     </section>
   );
 };
+export default Contact;

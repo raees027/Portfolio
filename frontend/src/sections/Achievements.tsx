@@ -27,7 +27,7 @@ export const Achievements: React.FC = () => {
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1, cubicBezier: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="glass-card p-6 rounded-2xl border border-white/5 hover:border-indigo-500/20 text-center flex flex-col justify-center space-y-3"
             >
               <div className="font-oswald text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 leading-none">
