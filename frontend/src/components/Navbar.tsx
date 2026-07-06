@@ -19,9 +19,32 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // If mobile dropdown is open, keep navbar visible
+      if (isOpen) {
+        setVisible(true);
+        setLastScrollY(currentScrollY);
+        return;
+      }
+
+      const diff = Math.abs(currentScrollY - lastScrollY);
+      if (diff >= 5) {
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+          // Scrolling down - hide header
+          setVisible(false);
+        } else {
+          // Scrolling up - show header
+          setVisible(true);
+        }
+      }
+      setLastScrollY(currentScrollY);
+
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) {
         setScrollProgress((window.scrollY / totalScroll) * 100);
@@ -29,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY, isOpen]);
 
   const cycleMode = () => {
     if (!setSysMode || !sysMode) return;
@@ -50,7 +73,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 liquid-glass-nav">
+    <nav 
+      className="fixed top-0 left-0 right-0 z-50 liquid-glass-nav"
+      style={{ 
+        transform: visible ? 'translateY(0)' : 'translateY(-100%)', 
+        transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)' 
+      }}
+    >
       {/* Scroll Progress Indicator Bar */}
       <div 
         className="absolute top-0 left-0 h-[2.5px] bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 transition-all duration-100" 
