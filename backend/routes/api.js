@@ -14,6 +14,18 @@ let mockLogs = [
   { timestamp: new Date(Date.now() - 3600000 * 1), sourceIp: '198.51.100.72', event: 'Unauthorized Login Attempt', severity: 'HIGH', status: 'RESOLVED', targetPort: 22 }
 ];
 
+let sseClients = [];
+
+const broadcastLog = (log) => {
+  sseClients.forEach(client => {
+    try {
+      client.res.write(`data: ${JSON.stringify(log)}\n\n`);
+    } catch {
+      // Clean up failed connections
+    }
+  });
+};
+
 // Helper to check if Mongoose is connected
 const isMongoConnected = () => {
   return typeof window === 'undefined' && Contact.db && Contact.db.readyState === 1;
@@ -23,30 +35,29 @@ const isMongoConnected = () => {
 const projects = [
   {
     id: 1,
-    title: "Movie Dashboard",
-    description: "A high-performance full-stack MERN application for movie data ingestion, search, and pagination. Features advanced search filters, user-specific data tracking, and dynamic analytics.",
-    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT Auth", "Tailwind CSS"],
+    title: "Cinemas Movie Dashboard",
+    description: "A high-performance full-stack MERN application for movie data ingestion, search, and pagination. Features advanced search filters, user-specific watchlist storage, and dynamic admin panel.",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Material UI", "REST APIs"],
     highlights: [
-      "Designed dynamic pagination and pagination cursors for handling dataset sizes efficiently.",
-      "Implemented JWT-based secure user state authentication and route-guards.",
-      "Optimized React render trees to eliminate unnecessary component re-renders.",
-      "Logged and tracked server status metrics dynamically."
+      "Designed dynamic pagination filters for handling large datasets.",
+      "Implemented secure MongoDB aggregation queries for list operations.",
+      "Optimized React rendering cycles using callback hooks."
     ],
-    github: "https://github.com",
-    live: "https://movie-dashboard-demo.com"
+    github: "https://github.com/raees027/Movie-App",
+    live: "https://cinemas.raees.dev"
   },
   {
     id: 2,
-    title: "Cyber Security SOC Dashboard",
-    description: "A dashboard designed for incident monitoring, tracking security telemetry, logs, and SIEM triggers. Fully integrated with automated scripts.",
-    tech: ["React.js", "Tailwind CSS", "Recharts", "Node.js", "Express.js", "Mongoose"],
+    title: "ScamShield",
+    description: "Fullstack security scanner and reporter platform blocking fraudulent UPIs, phone numbers, and URLs.",
+    tech: ["React Native", "Expo", "TypeScript", "Node.js", "Express.js", "Neon PostgreSQL"],
     highlights: [
-      "Simulates threat analysis telemetry visual logs.",
-      "Interactive shell console terminal mimicking bash CLI.",
-      "Includes responsive chart visualizers for security metrics."
+      "Scan API routes evaluating threat registries dynamically.",
+      "Automated verification logs mapping user reports.",
+      "Secured REST endpoints against automated queries."
     ],
-    github: "https://github.com",
-    live: "#"
+    github: "https://github.com/raees027/Scam-shield",
+    live: "https://scamshield.raees.dev"
   }
 ];
 
@@ -62,7 +73,6 @@ router.get('/logs', async (req, res) => {
       const logs = await Log.find().sort({ timestamp: -1 }).limit(20);
       return res.json(logs);
     }
-    // Fallback to mock logs
     res.json(mockLogs);
   } catch (error) {
     console.error('Error fetching logs, returning mock data:', error);
@@ -70,11 +80,31 @@ router.get('/logs', async (req, res) => {
   }
 });
 
+// GET Real-Time Logs Stream (Server-Sent Events)
+router.get('/logs/stream', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.flushHeaders();
+
+  const clientId = Date.now();
+  const newClient = { id: clientId, res };
+  sseClients.push(newClient);
+
+  // Send initial dataset
+  res.write(`data: ${JSON.stringify(mockLogs)}\n\n`);
+
+  req.on('close', () => {
+    sseClients = sseClients.filter(c => c.id !== clientId);
+  });
+});
+
 // POST SOC Log
 router.post('/logs', async (req, res) => {
   const { sourceIp, event, severity, status, targetPort } = req.body;
   const newLog = {
-    timestamp: new Date(),
+    timestamp: new Date().toISOString(),
     sourceIp: sourceIp || '127.0.0.1',
     event: event || 'Simulated Port Scan',
     severity: severity || 'LOW',
@@ -85,15 +115,18 @@ router.post('/logs', async (req, res) => {
   try {
     if (isMongoConnected()) {
       const savedLog = await Log.create(newLog);
+      broadcastLog(savedLog);
       return res.status(201).json(savedLog);
     }
     // Fallback
     mockLogs.unshift(newLog);
     if (mockLogs.length > 30) mockLogs.pop();
+    broadcastLog(newLog);
     res.status(201).json(newLog);
   } catch (error) {
     console.error('Error saving log, using fallback:', error);
     mockLogs.unshift(newLog);
+    broadcastLog(newLog);
     res.status(201).json(newLog);
   }
 });

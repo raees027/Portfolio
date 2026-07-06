@@ -11,6 +11,11 @@ import movieWatchlistImg from '../assets/movie_watchlist.png';
 import movieFilterImg from '../assets/movie_filter.png';
 import movieAdminImg from '../assets/movie_admin.png';
 
+// Import ScamShield screenshots
+import scamWebImg from '../assets/scamshield_web.png';
+import scamExplainImg from '../assets/scamshield_explain.png';
+import scamExtensionImg from '../assets/scamshield_extension.png';
+
 interface ProjectsProps {
   sysMode: string;
   setSysMode: (mode: string) => void;
@@ -25,6 +30,7 @@ export const Projects: React.FC<ProjectsProps> = ({
   setLightboxOpen 
 }) => {
   const [movieTab, setMovieTab] = useState<string>('main');
+  const [scamTab, setScamTab] = useState<string>('web');
 
   const filteredProjects = PROJECTS_DATA.filter(
     (p) => sysMode === 'dual' || p.type === sysMode
@@ -218,39 +224,56 @@ export const Projects: React.FC<ProjectsProps> = ({
                         </div>
                       )}
 
-                      {/* Project 2: ScamShield Scanner Mockup */}
+                      {/* Project 2: ScamShield tabbed screenshots */}
                       {project.id === 2 && (
-                        <div className="p-6 bg-black/40 flex flex-col justify-between space-y-4 select-none relative font-mono text-xs">
-                          {/* Top Scan Bar */}
-                          <div className="flex gap-2">
-                            <div className="flex-1 bg-slate-950 border border-white/5 rounded px-2.5 py-1.5 flex items-center justify-between text-[10px] text-slate-400">
-                              <span>paytm-support@ybl</span>
-                              <span className="bg-red-500/10 text-red-400 border border-red-500/20 px-1 py-0.5 rounded text-[8px] font-bold">UPI</span>
-                            </div>
-                            <div className="bg-purple-650 text-purple-400 font-bold px-3 py-1.5 rounded text-[9px] border border-purple-500/20 bg-purple-500/10 uppercase tracking-wider flex items-center">
-                              SCANNER_ACTIVE
-                            </div>
+                        <div className="p-4 bg-black/40 flex flex-col space-y-4">
+                          {/* Tabs */}
+                          <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-2 border-b border-white/[0.04]">
+                            {[
+                              { id: 'web', label: '🖥️ Web Dashboard' },
+                              { id: 'extension', label: '🔌 Extension Popup' },
+                              { id: 'explain', label: '🔍 Impersonation Handles' }
+                            ].map(t => (
+                              <button
+                                key={t.id}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setScamTab(t.id);
+                                }}
+                                className={`px-3 py-1 rounded text-[9px] font-mono font-bold transition-all cursor-pointer whitespace-nowrap ${
+                                  scamTab === t.id 
+                                    ? 'bg-purple-600/20 text-purple-400 border border-purple-500/30' 
+                                    : 'bg-slate-900 text-slate-500 hover:text-white border border-transparent'
+                                }`}
+                              >
+                                {t.label}
+                              </button>
+                            ))}
                           </div>
 
-                          {/* Scanner Results Panel */}
-                          <div className="p-3 bg-red-955/15 border border-red-900/20 rounded-xl space-y-2">
-                            <div className="flex justify-between items-center text-[10px]">
-                              <span className="text-slate-400">VERDICT:</span>
-                              <span className="text-red-400 font-bold tracking-widest uppercase">FLAGGED (SCAM)</span>
+                          {/* Screenshot Frame */}
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const imgMap: { [key: string]: string } = {
+                                web: scamWebImg,
+                                extension: scamExtensionImg,
+                                explain: scamExplainImg
+                              };
+                              setLightboxImg(imgMap[scamTab]);
+                              setLightboxOpen(true);
+                            }}
+                            className="relative rounded-xl overflow-hidden h-60 sm:h-72 bg-[#050507] border border-white/5 flex items-center justify-center cursor-zoom-in group/showcase"
+                          >
+                            {scamTab === 'web' && <img src={scamWebImg} alt="ScamShield Web Dashboard" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'extension' && <img src={scamExtensionImg} alt="ScamShield Extension Popup" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'explain' && <img src={scamExplainImg} alt="ScamShield Impersonation Handles" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            
+                            <div className="absolute inset-0 shadow-[inset_0_0_12px_rgba(0,0,0,0.6)] pointer-events-none" />
+                            
+                            <div className="absolute bottom-2 right-2.5 px-2 py-0.5 rounded bg-black/80 border border-white/5 text-[8px] font-mono text-purple-400 opacity-60 group-hover/showcase:opacity-100 transition-opacity uppercase tracking-wider">
+                              🔍 Click to enhance resolution
                             </div>
-                            <div className="flex justify-between items-center text-[10px]">
-                              <span className="text-slate-400">REPORTS RECORDED:</span>
-                              <span className="text-slate-200 font-bold">14 verified alerts</span>
-                            </div>
-                            <p className="text-[9px] text-slate-500 leading-normal border-t border-red-900/10 pt-1.5">
-                              This entity has been logged under multiple phishing and social engineering campaigns. Database sweeps suggest immediate containment.
-                            </p>
-                          </div>
-
-                          {/* Live DB Telemetry mini indicators */}
-                          <div className="flex justify-between text-[8px] text-slate-500 border-t border-white/[0.03] pt-2">
-                            <span>NEON_POOL: ACTIVE</span>
-                            <span>BLOCK_LIST: 1,842</span>
                           </div>
                         </div>
                       )}

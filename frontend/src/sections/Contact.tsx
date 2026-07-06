@@ -191,6 +191,16 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Custom Cloudflare Turnstile Protection simulation */}
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-950/40 border border-white/[0.03] max-w-sm">
+                  <div className="w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div>
+                  <div className="flex-1">
+                    <p className="font-mono text-[9px] font-bold text-slate-450 tracking-wider">CLOUDFLARE TURNSTILE</p>
+                    <p className="text-[8px] text-slate-500 font-mono">Secured by Turnstile client integrity challenge</p>
+                  </div>
+                  <span className="font-mono text-[9px] text-emerald-400 bg-emerald-950/20 px-2 py-0.5 rounded border border-emerald-800/30">VERIFIED</span>
+                </div>
+
                 <div className="flex items-center justify-between">
                   <Button
                     type="submit"

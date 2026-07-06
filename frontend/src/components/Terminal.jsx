@@ -12,6 +12,7 @@ const Terminal = () => {
   ]);
   const [input, setInput] = useState('');
   const terminalEndRef = useRef(null);
+  const isInitialMount = useRef(true);
 
   const commands = {
     help: 'Available commands: whoami, skills, projects, certs, hack, run [js_code], clear',
@@ -125,6 +126,10 @@ Operations: Git, GitHub, Postman, Docker, Kubernetes, Linux command CLI`,
   };
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     // Scroll to bottom
     if (terminalEndRef.current) {
       terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });

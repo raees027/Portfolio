@@ -19,22 +19,8 @@ export const Dashboard: React.FC = () => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/logs');
-        if (response.ok) {
-          const data = await response.json();
-          setLogs(data);
-          setIsConnected(true);
-        } else {
-          throw new Error('API offline');
-        }
-      } catch {
-        setIsConnected(false);
-        // Fallback generator for mock logs if backend is offline
-        generateLocalMockLogs();
-      }
-    };
+    let eventSource: EventSource | null = null;
+    let fallbackInterval: any = null;
 
     const generateLocalMockLogs = () => {
       const mockIp = ['185.220.101.4', '45.142.120.9', '192.168.1.15', '82.102.23.41', '198.51.100.72'];
@@ -57,9 +43,66 @@ export const Dashboard: React.FC = () => {
       setLogs(entries);
     };
 
-    fetchLogs();
-    const interval = setInterval(fetchLogs, 4000);
-    return () => clearInterval(interval);
+    const startPollingFallback = () => {
+      if (fallbackInterval) return;
+      
+      const fetchLogs = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/api/logs');
+          if (response.ok) {
+            const data = await response.json();
+            setLogs(data);
+            setIsConnected(true);
+          } else {
+            throw new Error('API offline');
+          }
+        } catch {
+          setIsConnected(false);
+          generateLocalMockLogs();
+        }
+      };
+
+      fetchLogs();
+      fallbackInterval = setInterval(fetchLogs, 4000);
+    };
+
+    const startSSE = () => {
+      try {
+        eventSource = new EventSource('http://localhost:5000/api/logs/stream');
+        
+        eventSource.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (Array.isArray(data)) {
+              setLogs(data);
+            } else {
+              setLogs((prev) => [data, ...prev].slice(0, 15));
+            }
+            setIsConnected(true);
+          } catch (e) {
+            console.error('SSE JSON parse error:', e);
+          }
+        };
+
+        eventSource.onerror = () => {
+          console.warn('SSE stream disconnect. Falling back to HTTP polling.');
+          setIsConnected(false);
+          eventSource?.close();
+          startPollingFallback();
+        };
+      } catch (err) {
+        console.warn('SSE initialization failed. Falling back to HTTP polling.', err);
+        setIsConnected(false);
+        startPollingFallback();
+      }
+    };
+
+    startSSE();
+
+    return () => {
+      eventSource?.close();
+      if (fallbackInterval) clearInterval(fallbackInterval);
+    };
   }, []);
 
   const getSeverityColor = (severity: string) => {
