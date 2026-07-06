@@ -94,3 +94,5 @@ export const CERTIFICATIONS = [
   { name: "Introduction to Web Design and Development", issuer: "LinkedIn Learning", date: "Verified Credentials" },
   { name: "Process: Agile for Practitioners Assessment", issuer: "TCS / Agile", date: "Verified Credentials" }
 ];
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';

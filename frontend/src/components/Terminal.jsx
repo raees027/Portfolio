@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Terminal as TermIcon, Play } from 'lucide-react';
+import { API_BASE_URL } from '../constants';
 
 const Terminal = () => {
   const [history, setHistory] = useState([
@@ -67,7 +68,7 @@ Operations: Git, GitHub, Postman, Docker, Kubernetes, Linux command CLI`,
     if (trimmedCmd === 'hack') {
       // Trigger fullstack logging payload
       try {
-        await fetch('http://localhost:5000/api/logs', {
+        await fetch(`${API_BASE_URL}/api/logs`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

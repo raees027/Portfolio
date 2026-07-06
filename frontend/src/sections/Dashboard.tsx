@@ -4,6 +4,7 @@ import Metrics from '../components/Metrics';
 import Charts from '../components/Charts';
 import { GithubCalendar } from '../components/GithubCalendar';
 import { Activity, Wifi } from 'lucide-react';
+import { API_BASE_URL } from '../constants';
 
 interface LogEntry {
   timestamp: string;
@@ -48,7 +49,7 @@ export const Dashboard: React.FC = () => {
       
       const fetchLogs = async () => {
         try {
-          const response = await fetch('http://localhost:5000/api/logs');
+          const response = await fetch(`${API_BASE_URL}/api/logs`);
           if (response.ok) {
             const data = await response.json();
             setLogs(data);
@@ -68,7 +69,7 @@ export const Dashboard: React.FC = () => {
 
     const startSSE = () => {
       try {
-        eventSource = new EventSource('http://localhost:5000/api/logs/stream');
+        eventSource = new EventSource(`${API_BASE_URL}/api/logs/stream`);
         
         eventSource.onmessage = (event) => {
           try {

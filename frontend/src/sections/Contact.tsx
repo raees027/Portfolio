@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Container, Typography, TextField, Button } from '@mui/material';
 import { ChevronRight } from 'lucide-react';
-import { PERSONAL_INFO } from '../constants';
+import { PERSONAL_INFO, API_BASE_URL } from '../constants';
 
 export const Contact: React.FC = () => {
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -28,7 +28,7 @@ export const Contact: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contactForm)
