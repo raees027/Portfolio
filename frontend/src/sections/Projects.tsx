@@ -15,6 +15,9 @@ import movieAdminImg from '../assets/movie_admin.png';
 import scamWebImg from '../assets/scamshield_web.png';
 import scamExplainImg from '../assets/scamshield_explain.png';
 import scamExtensionImg from '../assets/scamshield_extension.png';
+import scamMobileHomeImg from '../assets/scamshield_mobile_home.jpg';
+import scamMobileReportImg from '../assets/scamshield_mobile_report.jpg';
+import scamMobileStatsImg from '../assets/scamshield_mobile_stats.jpg';
 
 interface ProjectsProps {
   sysMode: string;
@@ -231,8 +234,11 @@ export const Projects: React.FC<ProjectsProps> = ({
                           <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-2 border-b border-white/[0.04]">
                             {[
                               { id: 'web', label: '🖥️ Web Dashboard' },
+                              { id: 'mobile-home', label: '📱 Mobile Home' },
+                              { id: 'mobile-report', label: '📋 Mobile Report' },
+                              { id: 'mobile-stats', label: '📊 Mobile Stats' },
                               { id: 'extension', label: '🔌 Extension Popup' },
-                              { id: 'explain', label: '🔍 Impersonation Handles' }
+                              { id: 'explain', label: '🔍 Scam Handles' }
                             ].map(t => (
                               <button
                                 key={t.id}
@@ -257,6 +263,9 @@ export const Projects: React.FC<ProjectsProps> = ({
                               e.stopPropagation();
                               const imgMap: { [key: string]: string } = {
                                 web: scamWebImg,
+                                'mobile-home': scamMobileHomeImg,
+                                'mobile-report': scamMobileReportImg,
+                                'mobile-stats': scamMobileStatsImg,
                                 extension: scamExtensionImg,
                                 explain: scamExplainImg
                               };
@@ -266,6 +275,9 @@ export const Projects: React.FC<ProjectsProps> = ({
                             className="relative rounded-xl overflow-hidden h-60 sm:h-72 bg-[#050507] border border-white/5 flex items-center justify-center cursor-zoom-in group/showcase"
                           >
                             {scamTab === 'web' && <img src={scamWebImg} alt="ScamShield Web Dashboard" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'mobile-home' && <img src={scamMobileHomeImg} alt="ScamShield Mobile Home" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'mobile-report' && <img src={scamMobileReportImg} alt="ScamShield Mobile Report" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'mobile-stats' && <img src={scamMobileStatsImg} alt="ScamShield Mobile Stats" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
                             {scamTab === 'extension' && <img src={scamExtensionImg} alt="ScamShield Extension Popup" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
                             {scamTab === 'explain' && <img src={scamExplainImg} alt="ScamShield Impersonation Handles" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
                             
