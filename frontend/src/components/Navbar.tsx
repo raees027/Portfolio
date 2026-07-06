@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Mail, Search } from 'lucide-react';
 import { PERSONAL_INFO } from '../constants';
 
@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -29,13 +29,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       // If mobile dropdown is open, keep navbar visible
       if (isOpen) {
         setVisible(true);
-        setLastScrollY(currentScrollY);
+        lastScrollY.current = currentScrollY;
         return;
       }
 
-      const diff = Math.abs(currentScrollY - lastScrollY);
+      const diff = Math.abs(currentScrollY - lastScrollY.current);
       if (diff >= 5) {
-        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
           // Scrolling down - hide header
           setVisible(false);
         } else {
@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           setVisible(true);
         }
       }
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
 
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) {
@@ -52,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, isOpen]);
+  }, [isOpen]);
 
   const cycleMode = () => {
     if (!setSysMode || !sysMode) return;
