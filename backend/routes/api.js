@@ -1,6 +1,7 @@
 import express from 'express';
 import Contact from '../models/Contact.js';
 import Log from '../models/Log.js';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
@@ -131,6 +132,41 @@ router.post('/logs', async (req, res) => {
   }
 });
 
+const sendEmailNotification = async (contact) => {
+  const { name, email, subject, message } = contact;
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
+
+  if (!user || !pass) {
+    console.log('[Nodemailer] Email notifications bypassed: EMAIL_USER or EMAIL_PASS not configured.');
+    return;
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user, pass }
+    });
+
+    const mailOptions = {
+      from: `"${name}" <${user}>`,
+      replyTo: email,
+      to: user,
+      subject: `[Portfolio Contact] ${subject || 'New Message'}`,
+      text: `You received a new message from your portfolio contact form:\n\n` +
+            `Name: ${name}\n` +
+            `Email: ${email}\n` +
+            `Subject: ${subject || 'None'}\n\n` +
+            `Message:\n${message}\n`
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('[Nodemailer] Email sent successfully to', user);
+  } catch (error) {
+    console.error('[Nodemailer] Failed to send email:', error);
+  }
+};
+
 // POST Contact Form
 router.post('/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
@@ -140,6 +176,9 @@ router.post('/contact', async (req, res) => {
   }
 
   const contactData = { name, email, subject, message, createdAt: new Date() };
+
+  // Send asynchronous notification
+  sendEmailNotification(contactData);
 
   try {
     if (isMongoConnected()) {
