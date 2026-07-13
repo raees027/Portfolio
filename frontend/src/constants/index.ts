@@ -2,7 +2,7 @@ export const PERSONAL_INFO = {
   name: "Muhammed Raees Pareed",
   title: "Software Engineer | Frontend Developer | Cybersecurity Analyst",
   subtitle: "Building responsive, secure, and user-friendly web and mobile applications.",
-  email: "raeeskp02@gmail.com",
+  email: "muhammedraeespareed@gmail.com",
   github: "https://github.com/raees027",
   linkedin: "https://www.linkedin.com/in/raees-muhammed-/",
   tcsDetails: "Assistant System Engineer at TCS"

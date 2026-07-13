@@ -67,7 +67,7 @@ He is a **Software Engineer / MERN Stack Developer** with a strong background in
       keywords: ['contact', 'email', 'hire', 'linkedin', 'github'],
       answer: `You can reach out to Muhammed Raees Pareed via:
       
-- **Email**: [raeeskp02@gmail.com](mailto:raeeskp02@gmail.com)
+- **Email**: [muhammedraeespareed@gmail.com](mailto:muhammedraeespareed@gmail.com)
 - **LinkedIn**: [in/raees-muhammed-](https://www.linkedin.com/in/raees-muhammed-/)
 - **GitHub**: [github.com/raees027](https://github.com/raees027)
 - **Location**: Bangalore, India.`
