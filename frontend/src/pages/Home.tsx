@@ -28,6 +28,10 @@ export const Home: React.FC<HomeProps> = ({
   setLightboxOpen
 }) => {
   useEffect(() => {
+    // Disable automatic browser scroll restoration on refresh
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
     // Force scroll to top on initial page mount if no specific hash is set
     if (window.location.hash === '' || window.location.hash === '#/') {
       window.scrollTo(0, 0);
