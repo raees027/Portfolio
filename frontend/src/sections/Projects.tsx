@@ -272,12 +272,16 @@ export const Projects: React.FC<ProjectsProps> = ({
                               setLightboxImg(imgMap[scamTab]);
                               setLightboxOpen(true);
                             }}
-                            className="relative rounded-xl overflow-hidden h-60 sm:h-72 bg-[#050507] border border-white/5 flex items-center justify-center cursor-zoom-in group/showcase"
+                            className={`relative rounded-xl overflow-hidden h-60 sm:h-72 bg-[#050507] border border-white/5 flex items-center justify-center cursor-zoom-in group/showcase transition-all duration-300 ${
+                              scamTab.startsWith('mobile-')
+                                ? 'w-[125px] sm:w-[150px] mx-auto shadow-[0_0_25px_rgba(168,85,247,0.1)] border-purple-500/20'
+                                : 'w-full'
+                            }`}
                           >
                             {scamTab === 'web' && <img src={scamWebImg} alt="ScamShield Web Dashboard" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
-                            {scamTab === 'mobile-home' && <img src={scamMobileHomeImg} alt="ScamShield Mobile Home" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
-                            {scamTab === 'mobile-report' && <img src={scamMobileReportImg} alt="ScamShield Mobile Report" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
-                            {scamTab === 'mobile-stats' && <img src={scamMobileStatsImg} alt="ScamShield Mobile Stats" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'mobile-home' && <img src={scamMobileHomeImg} alt="ScamShield Mobile Home" className="w-full h-full object-cover transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'mobile-report' && <img src={scamMobileReportImg} alt="ScamShield Mobile Report" className="w-full h-full object-cover transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
+                            {scamTab === 'mobile-stats' && <img src={scamMobileStatsImg} alt="ScamShield Mobile Stats" className="w-full h-full object-cover transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
                             {scamTab === 'extension' && <img src={scamExtensionImg} alt="ScamShield Extension Popup" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
                             {scamTab === 'explain' && <img src={scamExplainImg} alt="ScamShield Impersonation Handles" className="w-full h-full object-contain transition-transform duration-500 group-hover/showcase:scale-[1.01]" />}
                             
