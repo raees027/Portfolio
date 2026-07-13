@@ -26,7 +26,7 @@ export const SKILL_CATEGORIES = [
   },
   {
     name: "Cybersecurity Ops",
-    skills: ["Log Analysis", "Root Cause Analysis", "System Reliability", "Anomaly Detection", "Security Monitoring"]
+    skills: ["Log Analysis", "Risk Governance", "Network Auditing", "Software Compliance", "Security Monitoring"]
   },
   {
     name: "Databases & Tools",
@@ -42,9 +42,9 @@ export const EXPERIENCE_TIMELINE = [
     highlights: [
       "Role- Cyber Security Analyst",
       "Analyzed and investigated system issues using logs and monitoring tools.",
-      "Performed debugging and root cause analysis to resolve technical problems.",
-      "Collaborated with cross-functional teams to improve system reliability.",
-      "Worked with large datasets to identify anomalies and improve performance."
+      "Identified and remediated security policy violations by checking logs to remove unauthorized software, media, and unapproved files.",
+      "Worked on auditing and evaluating cybersecurity aspects of products, networks, and applications.",
+      "Assisted in risk governance audits, network monitoring, and system compliance reviews."
     ]
   }
 ];

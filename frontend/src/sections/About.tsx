@@ -43,7 +43,7 @@ export const About: React.FC = () => {
                 Software Engineer with experience in building responsive and scalable web applications using React.js, JavaScript, and Node.js. Skilled in developing reusable UI components, integrating REST APIs, and optimizing frontend performance.
               </Typography>
               <Typography variant="body1" className="text-slate-400 leading-relaxed font-light text-sm sm:text-base">
-                Currently serving as an <strong className="text-white font-semibold">Assistant System Engineer (Cybersecurity Analyst)</strong> at TCS, I execute security audits, trace packet transactions, and monitor SIEM telemetry logs. I construct defenses to guard fullstack MERN structures from injection and cross-site scripting vectors.
+                Currently serving as an <strong className="text-white font-semibold">Assistant System Engineer (Cybersecurity Analyst)</strong> at TCS, I work on auditing cybersecurity aspects of products, auditing networks, and checking system logs to detect and remove unauthorized software, media files, and unapproved applications while assisting in risk governance.
               </Typography>
             </motion.div>
           </div>

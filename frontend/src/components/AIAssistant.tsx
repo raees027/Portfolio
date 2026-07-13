@@ -78,9 +78,9 @@ He is a **Software Engineer / MERN Stack Developer** with a strong background in
       
 **Key Highlights**:
 - Analyzed and investigated system issues using logs and monitoring tools.
-- Performed debugging and root cause analysis to resolve technical problems.
-- Collaborated with cross-functional teams to improve system reliability.
-- Worked with large datasets to identify anomalies and improve performance.`
+- Identified and remediated security policy violations by checking logs to remove unauthorized software, media, and unapproved files.
+- Worked on auditing and evaluating cybersecurity aspects of products, networks, and applications.
+- Assisted in risk governance audits, network monitoring, and system compliance reviews.`
     }
   ];
 
